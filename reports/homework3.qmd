@@ -1,0 +1,203 @@
+---
+title: "STA 556 Homework 3: Housing Analysis"
+author: "Iris Robedeaux"
+format: html
+jupyter: python3
+---
+
+# Part 1: Reproducible Report and Data Description
+
+## 1.1 Introduction
+The dataset I chose covers housing data. The main goal of housing is to know what impacts the selling price of a home. I'll be using the square footage of the house, the number of bedrooms, and the age of the home (in years) to predict the price. To aid in prediction, I'll be creating and diagnosing a linear model using matrix computation.
+
+## 1.2 Data inspection and validation
+
+```{python}
+import pandas as pd
+import numpy as np
+
+#import the data
+housing = pd.read_csv("data/raw/housing.csv")
+```
+
+After importing the data, we can inspect some details about it.
+```{python}
+housing.head()
+```
+
+```{python}
+housing.shape
+```
+
+```{python}
+housing.dtypes
+```
+
+```{python}
+housing.isna().sum()
+```
+
+```{python}
+housing["id"].is_unique
+```
+
+As seen by the above output, the data has some solid diagnostics. There are 130 observations across 5 variables. There are no missing values. The IDs are unique as well. This all proves the data set is virtually ready to go for analysis.
+
+# Part 2: Matrix Setup and Standardization
+
+```{python}
+predictors = housing[
+    [
+        "size_sqft",
+        "bedrooms",
+        "age_years"
+    ]
+].to_numpy()
+
+y = housing["price_thousands"].to_numpy()
+```
+
+```{python}
+# standardize predictors (NumPy only)
+means = predictors.mean(axis=0)
+sds = predictors.std(axis=0)
+Z = (
+    predictors - means
+) / sds
+```
+
+```{python}
+print("Z column means:", Z.mean(axis=0))
+print("Z column sds:  ", Z.std(axis=0))
+```
+
+All 1s (rounding), standardizations looking good.
+
+```{python}
+X = np.column_stack([
+    np.ones(len(Z)),
+    Z
+])
+```
+
+```{python}
+print("shape of predictors:", predictors.shape)
+print("shape of Z:", Z.shape)
+print("shape of X:", X.shape)
+print("shape of y:", y.shape)
+print("matrix rank of X:", np.linalg.matrix_rank(X))
+print("number of predictors (excluding intercept):", Z.shape[1])
+```
+
+1. $X$ and $y$ must have the same number of rows, as they match the total number of observations in the original data set.  $X$ and $\beta$ have compatible inner dimensions to multiply, producing a single column. This single column is the predicted value, matching the single column in the $y$ matrix.
+
+2. The intercept column must be included, otherwise the prediction line would go through the origin. The column is all ones, but is necessary. It results in the intercept $B_0$ being added to every prediction, creating accurate estimates.
+
+3. Standardizing allows you to compare the predictors. Since they are all on different scales, directly comparing their coefficients would be meaningless. Once they are all standardized, with a mean of 0 and standard deviation of 1, then the comparison between coefficients can be made accurately.  
+
+4. Broadcasting allows the operation to be done automatically. A loop would require messing with indices and possibly an error. Broadcasting means that the elements are already matched with each column, creating a smooth command.
+
+# Part 3: Least Squares
+
+```{python}
+beta_hat, *_ = np.linalg.lstsq(
+    X,
+    y,
+    rcond=None
+)
+
+coef = pd.DataFrame({
+    "term": ["intercept", "size_sqft (std)", "bedrooms (std)", "age_years (std)"],
+    "estimate": beta_hat
+})
+coef
+```
+
+Above are the coefficients. The intercept is 378.691. Each of the predictors' standardized coefficients are as follows: housing square feet is 66.797, bedrooms is 13.692, and age in years is -17.929. The largest coefficient is the square footage of the housing, having the greatest impact on the price.
+
+```{python}
+fitted = X @ beta_hat
+residuals = y - fitted
+
+rmse = np.sqrt(
+    np.mean(
+        residuals ** 2
+    )
+)
+
+print("residual mean:", residuals.mean())
+print("RMSE:", rmse)
+```
+
+1. The $X @ beta_hat$ produces matrix multiplication between the X matrix and the coefficients. This produces the predicted values for each of the given predictor combinations given within the data set.
+
+2. The residual mean is near zero because of how residuals are created. The linear prediction is built on reducing the value of the residuals, and by nature, the sum of them must be zero. Since the sum of residuals of zero, the average will be too. The actual values might be off a bit in the output due to floating point rounding.
+
+3. RMSE is the estimated size of the error between the prediction and the actual values. It averages the square of each of the errors (removing the negatives), which gives the absolute average distance between the observed values and the prediction line. It gives the average size error for the data.
+
+4. $X @ beta_hat$ performs the proper matrix dot product in order to find the actual predictions. $X * beta_hat$ would provide an element-wise broadcast across the columns. It would do the correct operation of multiplying each coefficient for each of the predictors, however it wouldn't sum them. The resulting matrix would still have 4 columns, instead of just the one for the prediction.
+
+# Part 4: QR, SVD, and Conditioning
+
+## QR decomposition
+
+```{python}
+Q, R = np.linalg.qr(X)
+print("shape of Q:", Q.shape)
+print("shape of R:", R.shape)
+print("Q @ R close to X:", np.allclose(Q @ R, X))
+print("Q.T @ Q close to I:", np.allclose(Q.T @ Q, np.eye(Q.shape[1])))
+```
+
+## SVD
+
+```{python}
+U, s, Vt = np.linalg.svd(
+    X,
+    full_matrices=False
+)
+print("shape of U:", U.shape)
+print("shape of s:", s.shape)
+print("shape of Vt:", Vt.shape)
+print("singular values:", s)
+```
+
+```{python}
+X_reconstructed = (
+    U
+    @ np.diag(s)
+    @ Vt
+)
+print("reconstruction close to X:", np.allclose(X_reconstructed, X))
+```
+
+## Rank and conditioning
+
+```{python}
+X_raw = np.column_stack([
+    np.ones(len(predictors)),
+    predictors
+])
+
+print("rank of X:", np.linalg.matrix_rank(X))
+print("cond(X) standardized:", np.linalg.cond(X))
+print("cond(X_raw) raw:", np.linalg.cond(X_raw))
+```
+
+1. $Q @ R \approx X$ verifies that the QR factorization is correct. It ensures that by multiplying the factors together, you recover the design matrix.
+
+2. $Q^T @ Q \approx I$ verifies that the columns of Q are orthognoal. This is a defining property of Q, so it's a necessary check.
+
+3. The singular values measure how much $X$ stretches in space into that direction. Smaller values mean the column holds little independent information that cannot be known from the other columns.
+
+4. A large condition number suggest numerical instability, as small changes in one value can heavily affect the coefficients. Smaller values are better.
+
+5. Yes, the raw condition number is about 10733, but the standardized condition number is 2.7. 
+
+6. The original condition number is based on unscaled predictors. The condition values reflect the differences between the small and large values, which are inflated because they are on different scales. Standardizing the predictors puts them on the same scale, making the condition value much smaller.
+
+7. The standardized $X$ has a small condition number, about 3, and the smallest singular value is 5.7. Both of these indicate that the model has very little near-redundancy. There is little evidence that any of the predictors are correlated.
+
+# Part 5: Reproducibility and Numerical-Computing Reflection
+
+Clean execution matters for a computational report to ensure that anyone reviewing your work can trust it. If the execution isn't clear, any people looking at your code could either stop looking at it or hesitate to run the unknown code. Further, running the code top-to-bottom allows the results come from the code itself. It verifies that results needed in each succeeding line follows from the previous executions. Reusable code shouldn't rely on the notebook state by definition. In order to be reproducible, the code must create any necessary variables or objects within the code or use provided data files. In addition, it provides that variables are defined before they are used. The lstsq command is more efficient than the manual calculation because it doesn't rely on inverses. Since it works with X directly through factorizations, it can skip the computationally heavy inverse calculation. It's also necessary for accuracy. Using matrix computations could break down the inverse when predictors are nearly redundant. The `allclose` command is necessary since the matrix operations in commands like $Q @ R$ introduce floating point error. While any check for perfect equality will very likely result in a `False` output, `allclose` checks if the values are close within a given error amount. The condition number comparison indicates how numerical diagnosis can have standards for the baselines, but comparison is the most important part. It also allowed me to understand how scale of predictors has a large impact on the condition number. A large number could be indicative of unscaled predictors, instead of only redundant predictors. Comparing the before and after of an analysis step allows the improvements to be clearer. For the final project, I will continue to rely only on the work within the notebook or linked code files, since that makes the projects reproducible. I would want anyone pickup up my project to be able to get the same results. I will run a clean session to show reproducibility in my own report.
