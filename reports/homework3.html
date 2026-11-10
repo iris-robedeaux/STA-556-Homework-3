@@ -152,7 +152,7 @@ window.Quarto = {
 </section>
 <section id="data-inspection-and-validation" class="level2">
 <h2 class="anchored" data-anchor-id="data-inspection-and-validation">1.2 Data inspection and validation</h2>
-<div id="59a127e0" class="cell" data-execution_count="1">
+<div id="ca12bbd8" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -160,9 +160,9 @@ window.Quarto = {
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>housing <span class="op">=</span> pd.read_csv(<span class="st">"../data/raw/housing.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>After importing the data, we can inspect some details about it.</p>
-<div id="d8785f15" class="cell" data-execution_count="2">
+<div id="e894eb45" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>housing.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -224,15 +224,15 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<div id="ebae16d1" class="cell" data-execution_count="3">
+<div id="d2f64efb" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>housing.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(130, 5)</code></pre>
 </div>
 </div>
-<div id="fafd97b0" class="cell" data-execution_count="4">
+<div id="f7bdfc61" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>housing.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>id                   int64
 size_sqft          float64
 bedrooms             int64
@@ -241,9 +241,9 @@ price_thousands    float64
 dtype: object</code></pre>
 </div>
 </div>
-<div id="49ec5df5" class="cell" data-execution_count="5">
+<div id="c4e54dea" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>housing.isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>id                 0
 size_sqft          0
 bedrooms           0
@@ -252,9 +252,9 @@ price_thousands    0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="0c146672" class="cell" data-execution_count="6">
+<div id="d9a7e5eb" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>housing[<span class="st">"id"</span>].is_unique</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>True</code></pre>
 </div>
 </div>
@@ -263,7 +263,7 @@ dtype: int64</code></pre>
 </section>
 <section id="part-2-matrix-setup-and-standardization" class="level1">
 <h1>Part 2: Matrix Setup and Standardization</h1>
-<div id="c789cf78" class="cell" data-execution_count="7">
+<div id="4f97b2c8" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>predictors <span class="op">=</span> housing[</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    [</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"size_sqft"</span>,</span>
@@ -274,7 +274,7 @@ dtype: int64</code></pre>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> housing[<span class="st">"price_thousands"</span>].to_numpy()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="bf71723a" class="cell" data-execution_count="8">
+<div id="630f44fe" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># standardize predictors (NumPy only)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>means <span class="op">=</span> predictors.mean(axis<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sds <span class="op">=</span> predictors.std(axis<span class="op">=</span><span class="dv">0</span>)</span>
@@ -282,7 +282,7 @@ dtype: int64</code></pre>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    predictors <span class="op">-</span> means</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>) <span class="op">/</span> sds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="a02eea1b" class="cell" data-execution_count="9">
+<div id="8e6a2a50" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Z column means:"</span>, Z.mean(axis<span class="op">=</span><span class="dv">0</span>))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Z column sds:  "</span>, Z.std(axis<span class="op">=</span><span class="dv">0</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -291,13 +291,13 @@ Z column sds:   [1. 1. 1.]</code></pre>
 </div>
 </div>
 <p>All 1s (rounding), standardizations looking good.</p>
-<div id="d83d8d33" class="cell" data-execution_count="10">
+<div id="2b8e5223" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.column_stack([</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    np.ones(<span class="bu">len</span>(Z)),</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    Z</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="7e251351" class="cell" data-execution_count="11">
+<div id="0d9cb2d2" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"shape of predictors:"</span>, predictors.shape)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"shape of Z:"</span>, Z.shape)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"shape of X:"</span>, X.shape)</span>
@@ -322,7 +322,7 @@ number of predictors (excluding intercept): 3</code></pre>
 </section>
 <section id="part-3-least-squares" class="level1">
 <h1>Part 3: Least Squares</h1>
-<div id="5c396459" class="cell" data-execution_count="12">
+<div id="2fb999a4" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>beta_hat, <span class="op">*</span>_ <span class="op">=</span> np.linalg.lstsq(</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    X,</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    y,</span>
@@ -334,7 +334,7 @@ number of predictors (excluding intercept): 3</code></pre>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"estimate"</span>: beta_hat</span>
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>coef</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
@@ -374,7 +374,7 @@ number of predictors (excluding intercept): 3</code></pre>
 </div>
 </div>
 <p>Above are the coefficients. The intercept is 378.691. Each of the predictors’ standardized coefficients are as follows: housing square feet is 66.797, bedrooms is 13.692, and age in years is -17.929. The largest coefficient is the square footage of the housing, having the greatest impact on the price.</p>
-<div id="32cf1184" class="cell" data-execution_count="13">
+<div id="fefd3b8a" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>fitted <span class="op">=</span> X <span class="op">@</span> beta_hat</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y <span class="op">-</span> fitted</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -392,17 +392,17 @@ RMSE: 28.818978213959117</code></pre>
 </div>
 </div>
 <ol type="1">
-<li><p>The <span class="math inline">\(X @ beta_hat\)</span> produces matrix multiplication between the X matrix and the coefficients. This produces the predicted values for each of the given predictor combinations given within the data set.</p></li>
+<li><p>The <span class="math inline">\(X @ {beta}_{hat}\)</span> produces matrix multiplication between the X matrix and the coefficients. This produces the predicted values for each of the given predictor combinations given within the data set.</p></li>
 <li><p>The residual mean is near zero because of how residuals are created. The linear prediction is built on reducing the value of the residuals, and by nature, the sum of them must be zero. Since the sum of residuals of zero, the average will be too. The actual values might be off a bit in the output due to floating point rounding.</p></li>
 <li><p>RMSE is the estimated size of the error between the prediction and the actual values. It averages the square of each of the errors (removing the negatives), which gives the absolute average distance between the observed values and the prediction line. It gives the average size error for the data.</p></li>
-<li><p><span class="math inline">\(X @ beta_hat\)</span> performs the proper matrix dot product in order to find the actual predictions. <span class="math inline">\(X * beta_hat\)</span> would provide an element-wise broadcast across the columns. It would do the correct operation of multiplying each coefficient for each of the predictors, however it wouldn’t sum them. The resulting matrix would still have 4 columns, instead of just the one for the prediction.</p></li>
+<li><p><span class="math inline">\(X @ {beta}_{hat}\)</span> performs the proper matrix dot product in order to find the actual predictions. <span class="math inline">\(X * beta_hat\)</span> would provide an element-wise broadcast across the columns. It would do the correct operation of multiplying each coefficient for each of the predictors, however it wouldn’t sum them. The resulting matrix would still have 4 columns, instead of just the one for the prediction.</p></li>
 </ol>
 </section>
 <section id="part-4-qr-svd-and-conditioning" class="level1">
 <h1>Part 4: QR, SVD, and Conditioning</h1>
 <section id="qr-decomposition" class="level2">
 <h2 class="anchored" data-anchor-id="qr-decomposition">QR decomposition</h2>
-<div id="fd17e8c9" class="cell" data-execution_count="14">
+<div id="98022901" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Q, R <span class="op">=</span> np.linalg.qr(X)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"shape of Q:"</span>, Q.shape)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"shape of R:"</span>, R.shape)</span>
@@ -418,7 +418,7 @@ Q.T @ Q close to I: True</code></pre>
 </section>
 <section id="svd" class="level2">
 <h2 class="anchored" data-anchor-id="svd">SVD</h2>
-<div id="dc8c94a1" class="cell" data-execution_count="15">
+<div id="db6b15e0" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>U, s, Vt <span class="op">=</span> np.linalg.svd(</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    X,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    full_matrices<span class="op">=</span><span class="va">False</span></span>
@@ -434,7 +434,7 @@ shape of Vt: (4, 4)
 singular values: [15.60230122 11.40175425 10.66724547  5.72521361]</code></pre>
 </div>
 </div>
-<div id="2851200b" class="cell" data-execution_count="16">
+<div id="c91885e8" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>X_reconstructed <span class="op">=</span> (</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    U</span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">@</span> np.diag(s)</span>
@@ -448,7 +448,7 @@ singular values: [15.60230122 11.40175425 10.66724547  5.72521361]</code></pre>
 </section>
 <section id="rank-and-conditioning" class="level2">
 <h2 class="anchored" data-anchor-id="rank-and-conditioning">Rank and conditioning</h2>
-<div id="b1e3c21c" class="cell" data-execution_count="17">
+<div id="ea1ff680" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>X_raw <span class="op">=</span> np.column_stack([</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>    np.ones(<span class="bu">len</span>(predictors)),</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    predictors</span>

@@ -129,13 +129,13 @@ print("residual mean:", residuals.mean())
 print("RMSE:", rmse)
 ```
 
-1. The $X @ beta_hat$ produces matrix multiplication between the X matrix and the coefficients. This produces the predicted values for each of the given predictor combinations given within the data set.
+1. The $X @ {beta}_{hat}$ produces matrix multiplication between the X matrix and the coefficients. This produces the predicted values for each of the given predictor combinations given within the data set.
 
 2. The residual mean is near zero because of how residuals are created. The linear prediction is built on reducing the value of the residuals, and by nature, the sum of them must be zero. Since the sum of residuals of zero, the average will be too. The actual values might be off a bit in the output due to floating point rounding.
 
 3. RMSE is the estimated size of the error between the prediction and the actual values. It averages the square of each of the errors (removing the negatives), which gives the absolute average distance between the observed values and the prediction line. It gives the average size error for the data.
 
-4. $X @ beta_hat$ performs the proper matrix dot product in order to find the actual predictions. $X * beta_hat$ would provide an element-wise broadcast across the columns. It would do the correct operation of multiplying each coefficient for each of the predictors, however it wouldn't sum them. The resulting matrix would still have 4 columns, instead of just the one for the prediction.
+4. $X @ {beta}_{hat}$ performs the proper matrix dot product in order to find the actual predictions. $X * beta_hat$ would provide an element-wise broadcast across the columns. It would do the correct operation of multiplying each coefficient for each of the predictors, however it wouldn't sum them. The resulting matrix would still have 4 columns, instead of just the one for the prediction.
 
 # Part 4: QR, SVD, and Conditioning
 
