@@ -17,7 +17,7 @@ import pandas as pd
 import numpy as np
 
 #import the data
-housing = pd.read_csv("data/raw/housing.csv")
+housing = pd.read_csv("../data/raw/housing.csv")
 ```
 
 After importing the data, we can inspect some details about it.
